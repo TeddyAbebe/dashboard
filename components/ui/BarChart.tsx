@@ -46,14 +46,15 @@ const BarChart = () => {
         data: [50, 30, 45, 60, 20, 30, 20, 30, 60, 30, 50, 20],
         backgroundColor: "#6b21a8",
         borderRadius: 10,
-        barPercentage: 0.5,
-        categoryPercentage: 0.5,
+        barPercentage: 0.6,
+        categoryPercentage: 0.6,
       },
     ],
   };
 
   const options: ChartOptions<"bar"> = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         display: false,
@@ -106,7 +107,9 @@ const BarChart = () => {
         </div>
       </div>
 
-      <Bar data={data} options={options} />
+      <div className="w-full h-[350px]">
+        <Bar data={data} options={options} />
+      </div>
     </div>
   );
 };

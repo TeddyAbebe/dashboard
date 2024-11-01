@@ -95,7 +95,7 @@ const DonutChart = () => {
         ctx,
         chartArea: { top, bottom, left, right },
       } = chart;
-      const centerX = (left + right) / 2 + 30;
+      const centerX = (left + right) / 2;
       const centerY = (top + bottom) / 2;
 
       ctx.save();
@@ -115,13 +115,7 @@ const DonutChart = () => {
   };
 
   return (
-    <div
-      style={{
-        width: "600px",
-        height: "600px",
-        position: "relative",
-      }}
-    >
+    <div className="w-[550px] h-[550px] relative ">
       <Doughnut
         data={data}
         options={options}
