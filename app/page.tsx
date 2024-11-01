@@ -3,6 +3,7 @@ import DonutChart from "@/components/ui/DonutChart";
 import PageHeader from "@/components/ui/PageHeader";
 import Button from "@/components/ui/Button";
 import TransactionStats from "@/components/ui/TransactionStats";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -19,10 +20,12 @@ export default function Home() {
             <span>
               <h3 className="mb-4">Graphical Information</h3>
 
-              <Button
-                label="Transactions"
-                className="px-8 py-3 bg-[#6F018D] text-white rounded-md text-sm font-normal text-nowrap"
-              />
+              <Link href={"/transactions"}>
+                <Button
+                  label="Transactions"
+                  className="px-8 py-3 bg-[#6F018D] text-white rounded-md text-sm font-normal text-nowrap"
+                />
+              </Link>
             </span>
 
             <BarChart />

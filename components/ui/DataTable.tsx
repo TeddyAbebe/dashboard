@@ -1,77 +1,21 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 "use client";
 
 import React, { useState } from "react";
-import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
-import { FaFileExport } from "react-icons/fa6";
+import TableHeader from "./TableHeader";
+import Pagination from "./Pagination";
+import { DataTableProps } from "data-table";
+import Button from "./Button";
+import { FaFileExport } from "react-icons/fa";
 import { MdSearch } from "react-icons/md";
 
-import {
-  DataTableProps,
-  SortConfig,
-  TableHeaderProps,
-  Transaction,
-} from "data-table";
-import Button from "./Button";
-import Pagination from "./Pagination";
-
-const THeader: React.FC<TableHeaderProps<Transaction>> = ({
-  columns,
-  onSort,
-}) => {
-  const [sortConfig, setSortConfig] = useState<SortConfig>({
-    key: null,
-    direction: "asc",
-  });
-
-  const handleSort = (key: keyof Transaction) => {
-    let direction: "asc" | "desc" = "asc";
-    if (sortConfig.key === key && sortConfig.direction === "asc") {
-      direction = "desc";
-    }
-    setSortConfig({ key, direction });
-    onSort(key, direction);
-  };
-
-  return (
-    <thead className="w-full">
-      <tr className="bg-[#ECEDF3] text-[#6F018D] text-sm">
-        <th className="">
-          <input type="checkbox" />
-        </th>
-
-        {columns.map((col, index) => (
-          <th
-            key={col.key as string}
-            onClick={() => handleSort(col.key)}
-            className={`py-4 text-left cursor-pointer ${
-              columns.length - 1 === index ? "pr-2" : ""
-            }`}
-          >
-            <span className="flex gap-2 items-center text-nowrap">
-              {col.label}
-              {sortConfig.key === col.key ? (
-                sortConfig.direction === "asc" ? (
-                  <IoMdArrowDropup />
-                ) : (
-                  <IoMdArrowDropdown />
-                )
-              ) : (
-                ""
-              )}
-            </span>
-          </th>
-        ))}
-      </tr>
-    </thead>
-  );
-};
-
-const DataTable: React.FC<DataTableProps<Transaction>> = ({
+const DataTable = <T,>({
   columns,
   data,
   pagination,
   onSort,
-}) => {
+}: DataTableProps<T>) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const rowsPerPage = pagination ? pagination.rowsPerPage : data.length;
   const totalPages = Math.ceil(data.length / rowsPerPage);
@@ -125,12 +69,11 @@ const DataTable: React.FC<DataTableProps<Transaction>> = ({
       </div>
 
       <table className="w-full bg-white text-black">
-        <THeader columns={columns} onSort={onSort} />
-
+        <TableHeader columns={columns} onSort={onSort} />
         <tbody className="w-full">
           {currentData.map((row, rowIndex) => (
             <tr
-              key={row.transactionId}
+              key={rowIndex}
               className={`w-full cursor-pointer text-xs ${
                 rowIndex % 2 === 0 ? "bg-[#FFFFFF]" : "bg-[#F6F6F9]"
               }`}
@@ -140,12 +83,12 @@ const DataTable: React.FC<DataTableProps<Transaction>> = ({
               </td>
               {columns.map((col, colIndex) => (
                 <td
-                  key={col.key as string}
+                  key={String(col.key)}
                   className={`pt-3 p-2 text-nowrap ${
                     columns.length - 1 === colIndex ? "pr-4" : ""
                   }`}
                 >
-                  {col.render ? col.render(row) : row[col.key]}
+                  {col.render ? col.render(row) : (row as any)[col.key]}
                 </td>
               ))}
             </tr>

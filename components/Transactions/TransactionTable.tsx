@@ -1,15 +1,15 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React, { useState } from "react";
 import { AiFillEye } from "react-icons/ai";
 import { useRouter } from "next/navigation";
+import transactions from "@/data/transactions";
 import DataTable from "../ui/DataTable";
 import { Column, Transaction } from "data-table";
-import transactions from "@/data/transactions";
 
 const TransactionTable: React.FC = () => {
   const router = useRouter();
+  const [data, setData] = useState<Transaction[]>(transactions);
 
   const columns: Column<Transaction>[] = [
     {
@@ -26,13 +26,13 @@ const TransactionTable: React.FC = () => {
     {
       key: "amount",
       label: "Amount",
-      render: (row) => `${row.amount} Birr`,
+      render: (row) => `${row.amount}.00 Birr`,
     },
     {
       key: "status",
       label: "Status",
       render: (row) => (
-        <div className="bg-[#D3FCE3] text-[#35C04E] flex items-center font-semibold justify-center p-1 rounded-full">
+        <div className="bg-[#D3FCE3] text-[#35C04E] flex items-center justify-center p-1 rounded-full">
           {row.status}
         </div>
       ),
@@ -51,15 +51,12 @@ const TransactionTable: React.FC = () => {
     },
   ];
 
-  const [data, setData] = useState<Transaction[]>(transactions);
-
   const handleSort = (key: keyof Transaction, direction: "asc" | "desc") => {
     const sortedData = [...data].sort((a, b) => {
       if (a[key] < b[key]) return direction === "asc" ? -1 : 1;
       if (a[key] > b[key]) return direction === "asc" ? 1 : -1;
       return 0;
     });
-
     setData(sortedData);
   };
 

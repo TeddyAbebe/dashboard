@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
   MdKeyboardArrowLeft,
@@ -24,7 +26,7 @@ const Pagination: React.FC<PaginationProps> = ({
   };
 
   return (
-    <div className="flex items-center justify-end gap-2 p-4">
+    <div className="bg-white text-gray-800 flex items-center gap-3 justify-end p-3">
       <button
         disabled={currentPage === 1}
         onClick={() => handlePageChange(1)}

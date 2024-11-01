@@ -15,7 +15,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({ title }) => {
   };
 
   return (
-    <div className="bg-white p-10 flex items-center gap-2">
+    <div className="bg-white px-10 py-5 flex items-center gap-2">
       <button onClick={handleBack}>
         <TiArrowBack size={24} />
       </button>
