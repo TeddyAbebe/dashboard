@@ -1,15 +1,13 @@
+"use client";
+
 import TransactionDetail from "@/components/Transactions/Detail";
 import PageHeader from "@/components/ui/PageHeader";
 import React from "react";
+import { useParams } from "next/navigation";
 
-interface TransactionsDetailProps {
-  params: {
-    id: string;
-  };
-}
-
-const TransactionsDetail: React.FC<TransactionsDetailProps> = ({ params }) => {
-  const { id } = params;
+const TransactionsDetail: React.FC = () => {
+  const params = useParams();
+  const { id } = params as { id: string };
 
   return (
     <div className="bg-[#F8F8F8] min-h-screen">
