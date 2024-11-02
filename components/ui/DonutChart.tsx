@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Doughnut } from "react-chartjs-2";
@@ -43,6 +42,7 @@ const DonutChart = () => {
         borderColor: "#ffffff",
         borderWidth: 2,
         cutout: "60%",
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } as any,
     ],
   };
