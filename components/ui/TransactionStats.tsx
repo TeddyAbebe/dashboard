@@ -12,9 +12,9 @@ const TransactionStats: React.FC<StatsProps> = ({ amount, count }) => (
         <Image src="/wallet.svg" alt="Transactions" width={50} height={50} />
       </div>
 
-      <p>Total Transaction Amount</p>
+      <p className="w-full">Total Transaction Amount</p>
 
-      <h2 className="text-3xl font-bold">{amount} Birr</h2>
+      <h2 className="text-xl sm:text-3xl font-bold">{amount} Birr</h2>
     </div>
 
     <div className="p-6 bg-white rounded-2xl shadow">
@@ -22,8 +22,8 @@ const TransactionStats: React.FC<StatsProps> = ({ amount, count }) => (
         <Image src="/invoice.svg" alt="Transactions" width={50} height={50} />
       </div>
 
-      <p>Total Transaction Count</p>
-      <h2 className="text-3xl font-bold">{count} Transactions</h2>
+      <p className="w-full">Total Transaction Count</p>
+      <h2 className="text-xl sm:text-3xl font-bold">{count} Transactions</h2>
     </div>
   </div>
 );

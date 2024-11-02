@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -24,6 +24,31 @@ ChartJS.register(
 
 const BarChart = () => {
   const [timeFrame, setTimeFrame] = useState("Monthly");
+  const [barConfig, setBarConfig] = useState({
+    barPercentage: 0.6,
+    categoryPercentage: 0.6,
+  });
+
+  useEffect(() => {
+    const updateBarConfig = () => {
+      if (window.innerWidth < 768) {
+        setBarConfig({
+          barPercentage: 0.8,
+          categoryPercentage: 0.8,
+        });
+      } else {
+        setBarConfig({
+          barPercentage: 0.6,
+          categoryPercentage: 0.6,
+        });
+      }
+    };
+
+    updateBarConfig();
+    window.addEventListener("resize", updateBarConfig);
+
+    return () => window.removeEventListener("resize", updateBarConfig);
+  }, []);
 
   const data = {
     labels: [
@@ -46,8 +71,8 @@ const BarChart = () => {
         data: [50, 30, 45, 60, 20, 30, 20, 30, 60, 30, 50, 20],
         backgroundColor: "#6b21a8",
         borderRadius: 10,
-        barPercentage: 0.6,
-        categoryPercentage: 0.6,
+        barPercentage: barConfig.barPercentage,
+        categoryPercentage: barConfig.categoryPercentage,
       },
     ],
   };
@@ -90,7 +115,6 @@ const BarChart = () => {
       <div className="flex justify-between item-center p-2">
         <div className="w-1/2">
           <p>Total Transactions</p>
-
           <p className="text-3xl font-semibold">12,000</p>
         </div>
 

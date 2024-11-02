@@ -61,7 +61,7 @@ const TransactionTable: React.FC = () => {
   };
 
   return (
-    <div className="px-6 py-4 flex flex-col gap-2">
+    <div className="px-3 sm:px-6 py-4 flex flex-col gap-2">
       <p className="text-sm font-medium">Transaction List</p>
 
       <DataTable

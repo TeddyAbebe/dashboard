@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Doughnut } from "react-chartjs-2";
@@ -28,7 +29,7 @@ const DonutChart = () => {
     datasets: [
       {
         label: "Transactions by Type",
-        data: [32.5, 25, 43, 12, 8, 45, 4],
+        data: [32.5, 25, 43, 12, 18, 45, 14],
         backgroundColor: [
           "#6F018D",
           "#5F5C00",
@@ -42,7 +43,6 @@ const DonutChart = () => {
         borderColor: "#ffffff",
         borderWidth: 2,
         cutout: "60%",
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } as any,
     ],
   };
@@ -52,7 +52,7 @@ const DonutChart = () => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: "right",
+        position: window.innerWidth < 768 ? "top" : "right",
         labels: {
           usePointStyle: true,
           pointStyle: "rectRounded",
@@ -100,13 +100,15 @@ const DonutChart = () => {
 
       ctx.save();
 
-      ctx.font = "bold 16px Arial";
+      const isSmallScreen = window.innerWidth < 768;
+
+      ctx.font = isSmallScreen ? "bold 12px Arial" : "bold 16px Arial";
       ctx.fillStyle = "#9CA3AF";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       ctx.fillText("Total Transactions", centerX, centerY - 10);
 
-      ctx.font = "bold 24px Arial";
+      ctx.font = isSmallScreen ? "bold 18px Arial" : "bold 24px Arial";
       ctx.fillStyle = "#374151";
       ctx.fillText("20,000,000.00 ETB", centerX, centerY + 20);
 
@@ -115,7 +117,7 @@ const DonutChart = () => {
   };
 
   return (
-    <div className="w-[550px] h-[550px] relative ">
+    <div className="w-full max-w-[550px] mx-auto h-[550px] relative">
       <Doughnut
         data={data}
         options={options}

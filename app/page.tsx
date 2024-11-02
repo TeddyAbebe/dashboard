@@ -10,13 +10,13 @@ export default function Home() {
     <div className="min-h-screen bg-[#EFEEFF]">
       <PageHeader title="Dashboard" />
 
-      <div className="p-10">
+      <div className="px-4 sm:p-10">
         <h1 className="mb-4 text-xl font-semibold">Statistical information</h1>
 
         <TransactionStats amount="1,000,000.00" count={12200} />
 
-        <div className="grid grid-cols-2 gap-6 mb-6">
-          <div className="p-6 bg-white flex flex-col gap-5 rounded-2xl shadow">
+        <div className="flex flex-col sm:flex-row gap-6 mb-6">
+          <div className="p-6 bg-white sm:w-1/2 flex flex-col gap-5 rounded-2xl shadow">
             <span>
               <h3 className="mb-4">Graphical Information</h3>
 
@@ -31,7 +31,7 @@ export default function Home() {
             <BarChart />
           </div>
 
-          <div className="p-6 bg-white rounded-2xl shadow flex flex-col items-center">
+          <div className="p-6 bg-white sm:w-1/2 rounded-2xl shadow flex flex-col items-center">
             <h3 className="mb-4 w-full">Transactions in Type</h3>
 
             <DonutChart />

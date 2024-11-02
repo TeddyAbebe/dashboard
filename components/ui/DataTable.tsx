@@ -31,70 +31,74 @@ const DataTable = <T,>({
   const currentData = data.slice(startIndex, endIndex);
 
   return (
-    <div className="overflow-x-scroll rounded-md flex flex-col gap-4">
-      <div className="bg-white p-3 rounded-xl flex items-center justify-between gap-5">
-        <div className="flex items-center bg-[#F8F8F8] px-2 gap-2 rounded-md w-1/3">
+    <div className="rounded-md flex flex-col gap-4">
+      <div className="bg-white p-3 rounded-xl flex flex-col gap-5 md:flex-row md:items-center justify-between">
+        <div className="flex items-center bg-[#F8F8F8] px-2 gap-2 rounded-md w-full md:w-1/3">
           <MdSearch className="text-[#dadada]" size={22} />
-
           <input
             type="text"
             placeholder="Search by name, phone number or transaction ID"
-            className="w-[90%] bg-transparent outline-none py-4 text-sm"
+            className="w-full bg-transparent outline-none py-2 md:py-4 text-sm"
           />
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-col gap-3 md:flex-row md:items-center w-full sm:w-1/2">
           <span className="font-medium">Filters:</span>
-          <select className="bg-[#F8F8F8] outline-none p-4 rounded-md text-[#b1b1b1] text-sm">
-            <option value="">By service type</option>
-          </select>
 
-          <select className="bg-[#F8F8F8] outline-none p-4 rounded-md text-[#b1b1b1] text-sm">
-            <option value="">By status</option>
-          </select>
+          <div className="flex flex-wrap sm:flex-nowrap justify-between gap-y-2 w-full">
+            <select className="bg-[#F8F8F8] outline-none w-[45%] sm:w-[20%] py-2 md:py-4 px-2 md:px-4 rounded-md text-[#b1b1b1] text-sm">
+              <option value="">By service type</option>
+            </select>
 
-          <input
-            type="date"
-            className="bg-[#F8F8F8] outline-none p-4 rounded-md text-[#b1b1b1] text-sm"
-          />
-        </div>
+            <select className="bg-[#F8F8F8] outline-none w-[45%] sm:w-[20%] py-2 md:py-4 px-2 md:px-4 rounded-md text-[#b1b1b1] text-sm">
+              <option value="">By status</option>
+            </select>
 
-        <div className="flex items-center justify-end">
-          <Button
-            label="Export"
-            icon={<FaFileExport />}
-            className="px-8 py-3 bg-[#6F018D] text-white rounded-md"
-          />
+            <input
+              type="date"
+              className="bg-[#F8F8F8] outline-none w-[45%] sm:w-[20%] py-2 md:py-4 px-2 md:px-4 rounded-md text-[#b1b1b1] text-sm"
+            />
+
+            <div className="flex items-center justify-end">
+              <Button
+                label="Export"
+                icon={<FaFileExport />}
+                className="w-full md:w-auto px-9 py-3 bg-[#6F018D] text-white rounded-md"
+              />
+            </div>
+          </div>
         </div>
       </div>
 
-      <table className="w-full bg-white text-black">
-        <TableHeader columns={columns} onSort={onSort} />
-        <tbody className="w-full">
-          {currentData.map((row, rowIndex) => (
-            <tr
-              key={rowIndex}
-              className={`w-full cursor-pointer text-xs ${
-                rowIndex % 2 === 0 ? "bg-[#FFFFFF]" : "bg-[#F6F6F9]"
-              }`}
-            >
-              <td className="pl-3">
-                <input type="checkbox" />
-              </td>
-              {columns.map((col, colIndex) => (
-                <td
-                  key={String(col.key)}
-                  className={`pt-3 p-2 text-nowrap ${
-                    columns.length - 1 === colIndex ? "pr-4" : ""
-                  }`}
-                >
-                  {col.render ? col.render(row) : (row as any)[col.key]}
+      <div className="overflow-x-auto">
+        <table className="w-full bg-white text-black">
+          <TableHeader columns={columns} onSort={onSort} />
+          <tbody className="w-full">
+            {currentData.map((row, rowIndex) => (
+              <tr
+                key={rowIndex}
+                className={`w-full cursor-pointer text-xs ${
+                  rowIndex % 2 === 0 ? "bg-[#FFFFFF]" : "bg-[#F6F6F9]"
+                }`}
+              >
+                <td className="pl-3">
+                  <input type="checkbox" />
                 </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                {columns.map((col, colIndex) => (
+                  <td
+                    key={String(col.key)}
+                    className={`pt-3 p-2 text-nowrap ${
+                      columns.length - 1 === colIndex ? "pr-4" : ""
+                    }`}
+                  >
+                    {col.render ? col.render(row) : (row as any)[col.key]}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {pagination && (
         <Pagination
