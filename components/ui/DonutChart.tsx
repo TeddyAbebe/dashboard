@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Doughnut } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -15,6 +16,17 @@ import ChartDataLabels from "chartjs-plugin-datalabels";
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
 const DonutChart = () => {
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  useEffect(() => {
+    setIsSmallScreen(window.innerWidth < 768);
+
+    const handleResize = () => setIsSmallScreen(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const data: ChartData<"doughnut"> = {
     labels: [
       "Birth",
@@ -41,18 +53,17 @@ const DonutChart = () => {
         hoverOffset: 15,
         borderColor: "#ffffff",
         borderWidth: 2,
-        cutout: "60%",
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } as any,
+      },
     ],
   };
 
   const options: ChartOptions<"doughnut"> = {
     responsive: true,
     maintainAspectRatio: false,
+    cutout: "60%",
     plugins: {
       legend: {
-        position: window.innerWidth < 768 ? "top" : "right",
+        position: isSmallScreen ? "top" : "right",
         labels: {
           usePointStyle: true,
           pointStyle: "rectRounded",
@@ -100,8 +111,6 @@ const DonutChart = () => {
 
       ctx.save();
 
-      const isSmallScreen = window.innerWidth < 768;
-
       ctx.font = isSmallScreen ? "bold 12px Arial" : "bold 16px Arial";
       ctx.fillStyle = "#9CA3AF";
       ctx.textAlign = "center";
@@ -119,6 +128,7 @@ const DonutChart = () => {
   return (
     <div className="w-full max-w-[550px] mx-auto h-[550px] relative">
       <Doughnut
+        key={isSmallScreen ? "small" : "large"}
         data={data}
         options={options}
         plugins={[
